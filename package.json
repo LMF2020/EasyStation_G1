@@ -1,0 +1,24 @@
+{
+  "name": "easystation-app",
+  "version": "1.0.0",
+  "productName": "EZ-1g",
+  "description": "easystation",
+  "main": "main.js",
+  "keywords": [
+    "EZ"
+  ],
+  "author": "developer",
+  "devDependencies": {
+    "electron": "~1.7.8",
+    "electron-packager": "^9.1.0",
+    "electron-winstaller": "^2.6.3"
+  },
+  "dependencies": {
+    "jquery": "^3.2.1"
+  },
+  "scripts": {
+    "start": "electron . --develop",
+    "pkg-win": "node doc/installers/windows/createpackage.js",
+    "pkg-win-asar": "node doc/installers/windows/createpackage_asar.js"
+  }
+}

@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <meta charset="UTF-8">
+  <link rel="stylesheet" href="./static/css/coin-slider-styles.css">
+  <link rel="stylesheet" href="./static/css/index.css" />
+  <link rel="stylesheet" href="./static/css/reset.css">
+</head>
+
+<body>
+  <!--MARQUEE-->
+  <div id="bar">
+    <div id="homeIcon">
+      <a style="cursor:pointer;" id="homeBack">
+        <img src="./static/images/BackHome.png">
+      </a>
+    </div>
+    <div class="scroll-text">
+      <ul id="whether"></ul>
+    </div>
+    <div class="marqueeWrapper">
+      <!-- https://www.quackit.com/html/codes/html_marquee_code.cfm -->
+      <marquee direction="left" width="1080" behavior="scroll" scrollamount="3">
+        <div id="imgScroll"></div>
+      </marquee>
+    </div>
+  </div>
+  <!--HOME-->
+  <!--z-index-->
+  <div id="frame-wrapper">
+    <webview id="homePage" src="./static/page/home/home.html" style="z-index:2" nodeintegration plugins disablewebsecurity></webview>
+  </div>
+  <!--SCREENSAVER-->
+  <!--z-index-->
+  <div class="screen-wrapper">
+    <div id="screenSilderPage" style="opacity:0; z-index:1"></div>
+  </div>
+  <script>
+    window.$ = window.jQuery = require('jquery')
+  </script>
+  <script src='./static/js/coin-slider.min.js'></script>
+  <script>
+    require('./static/js/com.js')
+    require('./static/js/index.js')
+  </script>
+</body>
+
+</html>
