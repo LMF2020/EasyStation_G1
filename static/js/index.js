@@ -18,7 +18,7 @@ var LOCK_SCREEN_INTERVAL = 80 * 1000
 // time interval to change slide of screensaver
 var SCREEN_SILDE_INTERVAL = 20 * 1000
 // screen height
-var SCREEN_HEIGHT = 1210
+var SCREEN_HEIGHT = 673
 // screen timeout indicator
 var screenTimer = null
 
@@ -104,7 +104,7 @@ var IndexModule = (function () {
                 // TODO: redirect to custom page such as newspaper
             }
             if (!findPage) {
-                console.log('page not found', linkto)
+                // console.log('page not found', linkto)
             }
 
         })
@@ -161,7 +161,7 @@ var IndexModule = (function () {
             } else if (linkto != '') { // redirect to other links with http(s) header
                 showFrameLinkPage(linkto)
             } else {
-                console.log('show home page if link not found')
+                // console.log('show home page if link not found')
                 showHomePage()
             }
         })
@@ -223,20 +223,8 @@ var IndexModule = (function () {
         $('#frame-wrapper').animate({ opacity: 1 })
     }
 
-    var resetScreenTimeOut = function () {
-        clearScreenTimeOut()
-        setScreenTimeOut()
-    }
-
-    var clearScreenTimeOut = function () {
-        if (screenTimer) {
-            console.log('clear screen timeout indicator', screenTimer)
-            clearTimeout(screenTimer)
-            screenTimer = null
-        }
-    }
-
     var setScreenTimeOut = function () {
+        clearTimeout(screenTimer)
         screenTimer = setTimeout(() => {
             showScreen()
         }, LOCK_SCREEN_INTERVAL)
@@ -247,9 +235,7 @@ var IndexModule = (function () {
         showHomePage: showHomePage,
         showScreen: showScreen,
         hideScreen: hideScreen,
-        setScreenTimeOut: setScreenTimeOut,
-        clearScreenTimeOut: clearScreenTimeOut,
-        resetScreenTimeOut: resetScreenTimeOut
+        setScreenTimeOut: setScreenTimeOut
     }
 })()
 
@@ -264,9 +250,5 @@ if (dev_mode) {
 }
 
 $(document).mouseup(function (e) {
-    IndexModule.resetScreenTimeOut()
+    IndexModule.setScreenTimeOut()
 })
-
-homeWebview.addEventListener('did-stop-loading', function () {
-    // $("#screenSilderPage").animate({ opacity: 0 })
-});
