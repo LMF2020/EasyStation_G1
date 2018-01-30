@@ -125,7 +125,7 @@ var HomeModule = (function () {
 
     var initEvt = function () {
         $('.menu-icon').on({
-            click: function (e) {
+            'click': function (e) {
                 e.preventDefault();
                 var me = $(this);
                 var type = me.attr('id');
@@ -191,3 +191,10 @@ var HomeModule = (function () {
 })()
 
 HomeModule.init()
+
+window.onerror = function () { return true; }
+document.oncontextmenu = function () { return false; }
+document.onpaste = function () { return false; }
+document.oncopy = function () { return false; }
+document.oncut = function () { return false; }
+document.onselectstart = function () { return false; }

@@ -21,7 +21,8 @@ var SCREEN_SILDE_INTERVAL = 20 * 1000
 var SCREEN_HEIGHT = 673
 // screen timeout indicator
 var screenTimer = null
-
+// player only suppirt mp4/flv
+var flvPlayer
 // index shell
 var IndexModule = (function () {
 
@@ -43,8 +44,8 @@ var IndexModule = (function () {
 
         if (!isHome && isScreen) { // screen but not home
             $('#homePage').attr('src', COMJS.HOME_URL)
-            $('#frame-wrapper').animate({ opacity: 1 })
-            $('#screenSilderPage').animate({ opacity: 0 })
+            showDom('frame-wrapper')
+            hideDom('screenSilderPage')
         } else if (isScreen) { // screen and home         
             hideScreen()
         } else if (!isHome) { // not screen and not home
@@ -59,8 +60,8 @@ var IndexModule = (function () {
     // load linked page in web frame 
     var showFrameLinkPage = function (url) {
         $('#homePage').attr('src', url)
-        $('#frame-wrapper').animate({ opacity: 1 })
-        $('#screenSilderPage').animate({ opacity: 0 })
+        showDom('frame-wrapper')
+        hideDom('screenSilderPage')
     }
 
     // IPC register
@@ -73,6 +74,8 @@ var IndexModule = (function () {
                 showFrameLinkPage('http://www.ahfc.gov.cn/dlp/cp_ssq.shtml')
             } else if (action == 'OPEN_BOOKSTORE') { // open book store page (hardcode)
                 showFrameLinkPage('http://220.178.12.100:8181/bookstore/index.aspx')
+            } else if (action == 'RESET_SCREEN_TIME'){
+                setScreenTimeOut()
             }
         })
         // TODO: other webview event
@@ -87,7 +90,7 @@ var IndexModule = (function () {
 
         // marquee menu button
         $('#imgScroll').on('click', 'img', function (e) {
-            e.preventDefault()
+            // e.preventDefault()
             var findPage = false
             var linkto = $(this).attr('linkto')
             // validate external page url
@@ -152,7 +155,7 @@ var IndexModule = (function () {
 
         // bind click event
         $('#screenSilderPage').on('click', function (e) {
-            e.preventDefault()
+            // e.preventDefault()
             var linkto = $(this).attr('linkto')
             // redirect to the mapping link page
             if (linkto != '' && linkto == 'diary.htm') { // redirect to the newspaper
@@ -213,29 +216,36 @@ var IndexModule = (function () {
 
     // show screen
     var showScreen = function () {
-        $('#frame-wrapper').animate({ opacity: 0 })
-        $("#screenSilderPage").animate({ opacity: 1 })
+        hideDom('frame-wrapper')
+        showDom('screenSilderPage')
     }
 
     // hide screen
     var hideScreen = function () {
-        $("#screenSilderPage").animate({ opacity: 0 })
-        $('#frame-wrapper').animate({ opacity: 1 })
+        hideDom('screenSilderPage')
+        showDom('frame-wrapper')
     }
 
     var setScreenTimeOut = function () {
         clearTimeout(screenTimer)
+        screenTimer = null
         screenTimer = setTimeout(() => {
             showScreen()
         }, LOCK_SCREEN_INTERVAL)
+        console.log('trigger evt on screen', screenTimer)
+    }
+
+    var showDom = function (id) {
+        $('#' + id).css('opacity', 1)
+    }
+
+    var hideDom = function (id) {
+        $('#' + id).css('opacity', 0)
     }
 
     return {
         init: init,
-        showHomePage: showHomePage,
-        showScreen: showScreen,
-        hideScreen: hideScreen,
-        setScreenTimeOut: setScreenTimeOut
+        showHomePage: showHomePage
     }
 })()
 
@@ -248,7 +258,3 @@ if (dev_mode) {
         webview.openDevTools()
     })
 }
-
-$(document).mouseup(function (e) {
-    IndexModule.setScreenTimeOut()
-})

@@ -11,7 +11,7 @@ const url = require('url')
 global.CONFIG = require('./config.json');;
 
 // register flash plugin
-const develop = /--develop/.test(process.argv[2]);
+const develop = false
 let asarDir = '../app.asar.unpacked/plugins/';
 if (develop) {
   asarDir = '.';
@@ -20,6 +20,10 @@ let pluginName = 'pepflashplayer32_28_0_0_126.dll'
 const flashplayer = path.join(__dirname, asarDir + pluginName)
 app.commandLine.appendSwitch('ppapi-flash-path', flashplayer);
 app.commandLine.appendSwitch('ppapi-flash-version', '28.0.0.126');
+
+app.setLoginItemSettings({
+  openAtLogin: true
+})
 
 // app.disableHardwareAcceleration()
 // Keep a global reference of the window object, if you don't, the window will
