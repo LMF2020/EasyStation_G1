@@ -2,8 +2,8 @@ var path = require('path')
 var fs = require('fs')
 const remote = require('electron').remote
 var CONFIG = remote.getGlobal('CONFIG')
-database = CONFIG['DB_ROOT']
-var news_dir = path.join(database, "Diary")
+var DATABASE = CONFIG['cache.local_dir']
+var news_dir = path.join(DATABASE, "Diary")
 
 var DiaryModule = (function () {
 
@@ -39,7 +39,9 @@ var DiaryModule = (function () {
                     })
                 }
             })
-            newsData.State = 1
+            if (item.FilesList.length > 0) {
+                item.State = 1
+            }
         } catch (error) {
             console.log('read news dir failed', error)
         }
@@ -51,6 +53,10 @@ var DiaryModule = (function () {
         if (item.State > 0) {
             if (_diary != item.FilesList) {
                 _diary = item.FilesList
+
+                // dir size
+                _len = _diary.length
+
                 $("#date").html('')
                 // create date ui
                 $(_diary).each(function (index, item) {
@@ -62,7 +68,8 @@ var DiaryModule = (function () {
                     showDiaryByDate($(this).html())
                     hiddenlayer()
                 })
-                showDiaryByDate(_diary[0].Key)
+                
+                showDiaryByDate(_diary[_len - 1].Key)
 
                 bindSmartZoom()
             }
@@ -146,7 +153,7 @@ var DiaryModule = (function () {
     var bindListeners = function () {
 
         // trigger to select by page number
-        $("#layout").on('click', 'a', function () { 
+        $("#layout").on('click', 'a', function () {
             moveSliderLink($(this).index())
         })
 

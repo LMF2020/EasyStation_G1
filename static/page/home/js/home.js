@@ -35,7 +35,7 @@ var fs = require('fs')
 const remote = require('electron').remote
 var CONFIG = remote.getGlobal('CONFIG')
 // root dir
-var database = CONFIG['DB_ROOT']
+var DATABASE = CONFIG['cache.local_dir']
 
 // home module
 var HomeModule = (function () {
@@ -65,7 +65,7 @@ var HomeModule = (function () {
     // top Ads on the home page
     var showAdTop = function (data) {
         for (const i in data) {
-            var imgPath = database + '/' + 'LTop' + '/' + data[i];
+            var imgPath = DATABASE + '/' + 'LTop' + '/' + data[i];
             $("#coin-sliderTop").append("<img src='" + imgPath + "'  />");
         }
         $('#coin-sliderTop').coinslider({
@@ -81,7 +81,7 @@ var HomeModule = (function () {
     // bottom Ads on the home page
     var showAdBom = function (data) {
         for (const i in data) {
-            var imgPath = database + '/' + 'LBottom' + '/' + data[i];
+            var imgPath = DATABASE + '/' + 'LBottom' + '/' + data[i];
             $("#coin-sliderBom").append("<img src='" + imgPath + "'  />");
         }
         $('#coin-sliderBom').coinslider({
@@ -96,8 +96,8 @@ var HomeModule = (function () {
 
     // read ads from local disk
     var renderAd = function () {
-        var topImgDir = path.join(database, 'LTop')
-        var botImgDir = path.join(database, 'LBottom')
+        var topImgDir = path.join(DATABASE, 'LTop')
+        var botImgDir = path.join(DATABASE, 'LBottom')
 
         var topImgList = fs.readdirSync(topImgDir);
         var botImgList = fs.readdirSync(botImgDir);
