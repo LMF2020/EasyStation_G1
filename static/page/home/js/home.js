@@ -65,7 +65,7 @@ var HomeModule = (function () {
     // top Ads on the home page
     var showAdTop = function (data) {
         for (const i in data) {
-            var imgPath = DATABASE + '/' + 'LTop' + '/' + data[i];
+            var imgPath = DATABASE + '/' + 'STop' + '/' + data[i];
             $("#coin-sliderTop").append("<img src='" + imgPath + "'  />");
         }
         $('#coin-sliderTop').coinslider({
@@ -81,7 +81,7 @@ var HomeModule = (function () {
     // bottom Ads on the home page
     var showAdBom = function (data) {
         for (const i in data) {
-            var imgPath = DATABASE + '/' + 'LBottom' + '/' + data[i];
+            var imgPath = DATABASE + '/' + 'SBottom' + '/' + data[i];
             $("#coin-sliderBom").append("<img src='" + imgPath + "'  />");
         }
         $('#coin-sliderBom').coinslider({
@@ -96,8 +96,8 @@ var HomeModule = (function () {
 
     // read ads from local disk
     var renderAd = function () {
-        var topImgDir = path.join(DATABASE, 'LTop')
-        var botImgDir = path.join(DATABASE, 'LBottom')
+        var topImgDir = path.join(DATABASE, 'STop')
+        var botImgDir = path.join(DATABASE, 'SBottom')
 
         var topImgList = fs.readdirSync(topImgDir);
         var botImgList = fs.readdirSync(botImgDir);

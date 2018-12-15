@@ -39,8 +39,13 @@ var DiaryModule = (function () {
                     })
                 }
             })
-            if (item.FilesList.length > 0) {
-                item.State = 1
+            if (newsData.FilesList.length > 0) {
+                // Only remain latest 7-days paper
+                var _arr = newsData.FilesList;
+                if(_arr.length > 7){
+                    newsData.FilesList = _arr.slice(_arr.length - 7)
+                }
+                newsData.State = 1
             }
         } catch (error) {
             console.log('read news dir failed', error)
@@ -49,10 +54,10 @@ var DiaryModule = (function () {
     }
 
     // show diary
-    var showDiary = function (item) {
-        if (item.State > 0) {
-            if (_diary != item.FilesList) {
-                _diary = item.FilesList
+    var showDiary = function (newsData) {
+        if (newsData.State > 0) {
+            if (_diary != newsData.FilesList) {
+                _diary = newsData.FilesList
 
                 // dir size
                 _len = _diary.length

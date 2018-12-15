@@ -1,4 +1,3 @@
-
 const { ipcRenderer } = require('electron')
 
 var path = require('path')
@@ -30,18 +29,18 @@ var SCREEN_HEIGHT = 673
 // screen timeout indicator
 var screenTimer = null
 // player only suppirt mp4/flv
-var flvPlayer
 // index shell
+
 var IndexModule = (function () {
 
     // video dir 
     var videoDir = path.join(local_dir, "AD")
     // whether dir
-    var whetherDir = path.join(local_dir, "LWeather")
+    var whetherDir = path.join(local_dir, "SWeather")
     // marquee dir
-    var marqueeMenuDir = path.join(local_dir, "txtMarquee")
+    var marqueeMenuDir = path.join(local_dir, "SAPP")
     // screen dir
-    var screenAdsDir = path.join(local_dir, "LMarquee")
+    var screenAdsDir = path.join(local_dir, "SScreen")
 
     // show home page
     var showHomePage = function () {
@@ -91,6 +90,7 @@ var IndexModule = (function () {
     }
 
     var registerListeners = function () {
+        
         // home menu button
         $('#homeBack').on('click', function (e) {
             e.preventDefault()
@@ -158,7 +158,7 @@ var IndexModule = (function () {
         for (key in imgs) {
             var img = imgs[key]
             // var imgPath = path.join(dir, img['name'] + "." + img['ext'])
-            var imgPath = local_dir + '/' + 'LMarquee' + '/' + img['name'] + "." + img['ext']
+            var imgPath = local_dir + '/' + 'SSCreen' + '/' + img['name'] + "." + img['ext']
             $("#screenSilderPage").append("<img class='screen-img' src='" + imgPath + "' linkto='" + img['url'] + "'/>")
         }
 
